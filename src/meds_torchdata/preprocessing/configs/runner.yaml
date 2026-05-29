@@ -1,0 +1,11 @@
+defaults:
+  - _runner
+  - _self_
+
+parallelize:
+  n_workers: ${oc.env:N_WORKERS,1}
+  launcher: "joblib"
+
+hydra:
+  searchpath:
+    - "pkg://MEDS_transforms.configs"

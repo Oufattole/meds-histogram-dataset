@@ -1,0 +1,20 @@
+input_dir: ${oc.env:INPUT_DIR}
+output_dir: ${oc.env:OUTPUT_DIR}
+
+etl_metadata.pipeline_name: "tensorization"
+
+stages:
+  - reshard_to_split:
+      n_subjects_per_shard: 10000
+  - fit_normalization:
+      aggregations:
+        - "code/n_occurrences"
+        - "code/n_subjects"
+        - "values/n_occurrences"
+        - "values/sum"
+        - "values/sum_sqd"
+    _base_stage: aggregate_code_metadata
+  - fit_vocabulary_indices
+  - normalization
+  - tokenization
+  - tensorization
